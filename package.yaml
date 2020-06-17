@@ -23,6 +23,7 @@ ghc-options: -Wall
 library:
   dependencies:
   - base
+  - stm
   source-dirs: library
 
 executables:
@@ -31,6 +32,7 @@ executables:
     main: Main.hs
     dependencies:
     - base
+    - stm
     - iasc-stm-practica
     ghc-options:
     - -rtsopts
@@ -43,6 +45,7 @@ benchmarks:
     main: Main.hs
     dependencies:
     - base
+    - stm 
     - iasc-stm-practica
     - criterion
     ghc-options:
@@ -56,6 +59,7 @@ tests:
     main: Main.hs
     dependencies:
     - base
+    - stm
     - iasc-stm-practica
     - tasty
     - tasty-hspec
