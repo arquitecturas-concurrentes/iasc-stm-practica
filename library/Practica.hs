@@ -3,8 +3,8 @@
 
 module Practica where
 
-import Control.Concurrent.STM
-import Control.Monad
+import Control.Concurrent.STM ( readTVar, writeTVar, STM, TVar )
+import Control.Monad ()
 
 data Item = RedScroll
             | BlueScroll

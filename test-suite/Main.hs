@@ -5,16 +5,26 @@ import qualified Test.Tasty
 -- Hspec is one of the providers for Tasty. It provides a nice syntax for
 -- writing tests. Its website has more info: <https://hspec.github.io>.
 import Test.Tasty.Hspec
-import Control.Monad
+    ( describe, it, parallel, shouldReturn, testSpec, Spec )
+import Control.Monad ( ap, liftM2, liftM )
 import Control.Concurrent.STM
+    ( STM, atomically, newTVar, readTVar )
 import Practica
+    ( giveItem,
+      sellItem,
+      transfer,
+      HitPoint,
+      InventoryOut,
+      Item(RedScroll, Axe),
+      Player(Player, inventory, account) )
 
 newPlayer :: Int -> HitPoint -> InventoryOut -> STM Player
-newPlayer balance health inventory =
+newPlayer balance playerHealth playerInventory =
     Player `liftM` newTVar balance
-              `ap` newTVar health
-              `ap` newTVar inventory
+              `ap` newTVar playerHealth
+              `ap` newTVar playerInventory
 
+transferTest :: STM (Int, Int)
 transferTest = do
   caballero <- newTVar 30
   mago <- newTVar 10
@@ -22,22 +32,25 @@ transferTest = do
   -- Lifteo el valor de dos resultados separados por coma
   liftM2 (,) (readTVar caballero) (readTVar mago) 
 
+giveItemTest :: STM ([Item], [Item])
 giveItemTest = do
     caballero <- newPlayer 20 (100 :: HitPoint) [Axe, RedScroll]
     mago <- newPlayer 20 (100 :: HitPoint) []
-    giveItem RedScroll (inventory caballero) (inventory mago)
+    _ <- giveItem RedScroll (inventory caballero) (inventory mago)
     liftM2 (,) (readTVar (inventory caballero)) (readTVar (inventory mago)) 
 
+sellItemTestCheckInventory :: STM ([Item], [Item])
 sellItemTestCheckInventory = do
     caballero <- newPlayer 20 (100 :: HitPoint) [Axe, RedScroll]
     mago <- newPlayer 20 (100 :: HitPoint) []
-    sellItem RedScroll 10 mago caballero
+    _ <- sellItem RedScroll 10 mago caballero
     liftM2 (,) (readTVar (inventory caballero)) (readTVar (inventory mago))
 
+sellItemTestCheckAccount :: STM (Int, Int)
 sellItemTestCheckAccount = do
     caballero <- newPlayer 20 (100 :: HitPoint) [Axe, RedScroll]
     mago <- newPlayer 20 (100 :: HitPoint) []
-    sellItem RedScroll 10 mago caballero
+    _ <- sellItem RedScroll 10 mago caballero
     liftM2 (,) (readTVar (account caballero)) (readTVar (account mago))
     
 main :: IO ()

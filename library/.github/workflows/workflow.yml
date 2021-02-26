@@ -1,0 +1,18 @@
+on: [push]
+name: build
+jobs:
+  runtests:
+    name: Run Tests for IASC STM practice
+    runs-on: ubuntu-latest # or macOS-latest, or windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: haskell/actions/setup@v1
+        with:
+          ghc-version: '8.8.3' # Exact version of ghc to use
+          cabal-version: 'latest'
+          enable-stack: true
+          stack-version: 'latest'
+      - name: Build project with stack
+        run: stack build   
+      - name: Run tests with stack
+        run: stack test
