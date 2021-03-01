@@ -3,12 +3,12 @@
 # this file: <https://github.com/sol/hpack>.
 name: iasc-stm-practica
 version: '0.0.0'
-github: "githubuser/iasc-stm-practica"
+github: "arquitecturas-concurrentes/iasc-stm-practica"
 license: MIT
-author: "Author name here"
-maintainer: "Author name here"
+author: "Arquitecturas Concurrentes"
+maintainer: "Arquitecturas Concurrentes"
 # synopsis: A new Haskeleton package.
-# description: iasc-stm-practica is a new Haskeleton package.
+description: Resolucion del TP de STM en haskell.
 # category: Other
 
 extra-source-files:
@@ -45,7 +45,7 @@ benchmarks:
     main: Main.hs
     dependencies:
     - base
-    - stm 
+    - stm
     - iasc-stm-practica
     - criterion
     ghc-options:
@@ -59,7 +59,7 @@ tests:
     main: Main.hs
     dependencies:
     - base
-    - stm
+    - stm    
     - iasc-stm-practica
     - tasty
     - tasty-hspec

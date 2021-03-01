@@ -93,3 +93,7 @@ Despues de eso hay que buildear o compilar lo que este en la carpeta library con
 y cuando se tengan que correr los tests solo hay que hacer
 
 `stack test`
+
+### Consignas 
+
+- Completar las funciones de sellItem , giveItem y transfer. Hay algunas intuiciones en el codigo en `library/Practica.hs`
